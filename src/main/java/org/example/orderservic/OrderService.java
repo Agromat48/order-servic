@@ -7,11 +7,20 @@ import org.springframework.stereotype.Service;
 @Service
 public class OrderService {
 
-    private static final Logger log = LoggerFactory.getLogger(OrderController.class);
+    private static final Logger log = LoggerFactory.getLogger(OrderService.class);
+
+    private final OrderKafkaProducer kafkaProducer;
+
+    public OrderService(OrderKafkaProducer kafkaProducer) {
+        this.kafkaProducer = kafkaProducer;
+    }
 
     public void saveOrder(Order orderToSave) {
-        //saving to database...
-        //send to kafka
-        log.info("Saving order {}", orderToSave);
+        log.info("Saving order to database: {}", orderToSave);
+
+        // ... здесь код сохранения в Базу Данных ...
+
+        // Отправляем в Kafka через наш выделенный компонент
+        kafkaProducer.sendOrderToKafka(orderToSave);
     }
 }
