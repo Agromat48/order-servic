@@ -1,0 +1,7 @@
+POST http://172.20.26.87:8080/orders
+Content-Type: application/json
+
+{
+  "product": "product-name",
+  "quantity": 10
+}
